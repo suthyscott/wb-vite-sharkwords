@@ -24,7 +24,7 @@ const initSharkwords = () => {
     // for debugging:
     console.log(`[INFO] Correct word is: ${word}`)
 
-    const sharkImgEl = document.querySelector('#shark-img');
+    const sharkImgEl = document.querySelector("#shark-img")
 
     const handleGuess = (guessEvent, letter) => {
         guessEvent.target.disabled = true
@@ -34,9 +34,28 @@ const initSharkwords = () => {
             numWrong += 1
             setSharkImage(sharkImgEl, numWrong)
         }
+        const isWordComplete = Array.from(
+            document.querySelectorAll(".letter-box")
+        ).every(el => el.innerText !== "")
+        
+        console.log(isWordComplete)
+        if (isWordComplete) {
+            document.querySelectorAll("button").forEach(btn => {
+                btn.setAttribute("disabled", true)
+            })
+            document.getElementById('game-status').innerText = 'You win!'
+        }
+        if(numWrong === 5){
+            document.querySelectorAll("button").forEach(btn => {
+                btn.setAttribute("disabled", true)
+            })
+            document.getElementById('game-status').innerText = 'You lose!'
+
+        }
     }
 
     setupGuesses(document.querySelector("#letter-buttons"), handleGuess)
 }
 
 initSharkwords()
+
